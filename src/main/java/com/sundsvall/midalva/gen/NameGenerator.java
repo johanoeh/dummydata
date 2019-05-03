@@ -9,28 +9,23 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class NameGenerator {
 
-    List<String> firstNames;
+    List<String> maleNames;
     List<String> lastNames;
-    List<String> middleNames;
+    List<String> femaleNames;
 
-    public NameGenerator( List<String> firstNames, List<String> middleNames,List<String> lastNames) {
-        this.firstNames = firstNames;
+    public NameGenerator( List<String> firstNames, List<String> femaleNames ,List<String> lastNames) {
+        
+        this.maleNames = firstNames;
         this.lastNames = lastNames;
-        this.middleNames = middleNames;
+        this.femaleNames = femaleNames;
+   
     }
 
-    public String getNextRandomFirstName() {
-        if (firstNames == null ||firstNames.isEmpty()) {
+    public String getNextRandomMaleName() {
+        if (maleNames == null ||maleNames.isEmpty()) {
             return "";
         }
-        return firstNames.get(ThreadLocalRandom.current().nextInt(0, firstNames.size()));
-    }
-
-    public String getNextRandomMiddleName() {
-        if (middleNames == null || middleNames.isEmpty()) {
-            return "";
-        }
-        return middleNames.get(ThreadLocalRandom.current().nextInt(0, middleNames.size()));
+        return maleNames.get(ThreadLocalRandom.current().nextInt(0, maleNames.size()));
     }
 
     public String getNextRandomLastName() {
@@ -39,16 +34,23 @@ public class NameGenerator {
         }
         return lastNames.get(ThreadLocalRandom.current().nextInt(0, lastNames.size()));
     }
-
-
-
-
-    public List<String> getFirstNames() {
-        return firstNames;
+    
+       public String getNextRandomFemaleName() {
+        if (femaleNames == null || femaleNames.isEmpty()) {
+            return null;
+        }
+        return femaleNames.get(ThreadLocalRandom.current().nextInt(0, femaleNames.size()));
     }
 
-    public void setFirstNames(List<String> firstNames) {
-        this.firstNames = firstNames;
+
+
+
+    public List<String> getMaleNames() {
+        return maleNames;
+    }
+
+    public void setMaleNames(List<String> maleNames) {
+        this.maleNames = maleNames;
     }
 
     public List<String> getLastNames() {
@@ -59,12 +61,12 @@ public class NameGenerator {
         this.lastNames = lastNames;
     }
 
-    public List<String> getMiddleNames() {
-        return middleNames;
+    public List<String> getFemaleNames() {
+        return femaleNames;
     }
 
-    public void setMiddleNames(List<String> middleNames) {
-        this.middleNames = middleNames;
+    public void setFemaleNames(List<String> femaleNames) {
+        this.femaleNames = femaleNames;
     }
 
 }

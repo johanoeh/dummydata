@@ -7,7 +7,7 @@ package com.sundsvall.midalva.dao;
 
 import com.sundsvall.midalva.model.Address;
 import com.sundsvall.midalva.parser.AddressParser;
-import com.sundsvall.midalva.parser.FirstNameParser;
+import com.sundsvall.midalva.parser.NameParser;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -19,7 +19,8 @@ import java.util.List;
  */
 public class DAO {
 
-    private String firstNameFile;
+    private String maleNameFile;
+    private String femaleNameFile;
     private String lastNameFile;
     private String addressFile;
 
@@ -30,8 +31,9 @@ public class DAO {
         return br;
     }
 
-    public DAO(String firstNameFile, String lastNameFile, String addressFile) {
-        this.firstNameFile = firstNameFile;
+    public DAO(String femaleNameFile,String maleNameFile, String lastNameFile, String addressFile) {
+        this.maleNameFile = maleNameFile;
+        this.femaleNameFile = femaleNameFile;
         this.lastNameFile = lastNameFile;
         this.addressFile=addressFile;
     }
@@ -39,8 +41,8 @@ public class DAO {
     private List<String> getNames(String names) throws IOException {
         String firstName = "";
         List<String> firstNames = new ArrayList<>();
-        FirstNameParser fnp = new FirstNameParser(getResource(names));
-        while ((firstName = fnp.nextName()) != null) {
+        NameParser nameParser = new NameParser(getResource(names));
+        while ((firstName = nameParser.nextName()) != null) {
             firstNames.add(firstName);
         }
         return firstNames;
@@ -50,9 +52,14 @@ public class DAO {
         return getNames(lastNameFile);
     }
     
-    public List<String> getNames() throws IOException{
-     return getNames(firstNameFile);
+    public List<String> getMaleNames() throws IOException{
+     return getNames(maleNameFile);
     }
+    
+    public List<String> getFemaleNames() throws IOException{
+     return getNames(femaleNameFile);
+    }
+    
 
     public List<Address> getAdrresses() throws IOException {
 

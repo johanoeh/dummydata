@@ -67,11 +67,16 @@ public class Address {
         this.address = address;
     }
 
-
-
     @Override
     public String toString() {
-       return String.format("Address[ address=%s, postalNumber=%s, postalAddress=%s ]", address, postalNumber, postalAddress);
+        return "Address{" + 
+                    "postalAddress=" + postalAddress +
+                    ", postalNumber=" + postalNumber + 
+                    ", address=" + address 
+                + '}';
     }
+
+
+
 
 }
