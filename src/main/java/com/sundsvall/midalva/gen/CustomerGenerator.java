@@ -48,9 +48,11 @@ public class CustomerGenerator {
         if (!isFemale()) {
             person.setFirstName(nameGenerator.getNextRandomMaleName());
             person.setMiddleName(nameGenerator.getNextRandomMaleName());
+            person.setLegalId(DummyLegalId.createFemaleLegalId());
         } else {
             person.setFirstName(nameGenerator.getNextRandomFemaleName());
             person.setMiddleName(nameGenerator.getNextRandomFemaleName());
+            person.setLegalId(DummyLegalId.createMaleLegalId());
         }
        
          person.setEmail(DummyEmail.create(person));

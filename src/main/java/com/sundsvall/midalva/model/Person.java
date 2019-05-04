@@ -117,7 +117,8 @@ public class Person {
     @Override
     public String toString() {
         return "Person{"
-                + "firstName=" + firstName
+                + "legalId=" + legalId
+                + ", firstName=" + firstName
                 + ", middleName=" + middleName
                 + ", lastName=" + lastName
                 + ", email=" + email

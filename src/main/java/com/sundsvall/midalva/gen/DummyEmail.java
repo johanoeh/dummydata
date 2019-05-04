@@ -31,7 +31,6 @@ public class DummyEmail {
     private static String fixName(String name){
          return name
                  .toLowerCase()
-                 .replaceAll("\\s", "")
                  .replaceAll("å", "a")
                  .replaceAll("ä", "a")
                  .replaceAll("ö","o");
