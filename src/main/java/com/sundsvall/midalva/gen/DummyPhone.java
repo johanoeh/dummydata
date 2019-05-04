@@ -15,24 +15,7 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author ohhhhjoh
  */
 public class DummyPhone {
-    
-    public enum NumBegin{
-        
-        BEGIN_4670("4670"),
-        BEGIN_4673("4673"),
-        BEGIN_4676("4676");
-        
-        private final String numBegin;
-        
-        NumBegin(String numBegin){
-           this.numBegin= numBegin;
-        }
-
-        public String getNumBegin() {
-            return numBegin;
-        }  
-    }
-
+   
     private static String [] numbegins = {"4670", "4672", "4673", "4676", "4679"};
     /**
      * @param len
