@@ -20,7 +20,9 @@ public class NameParser extends AbstractParser {
 
     @Override
     public String nextName() throws IOException {
-        return br.readLine();
+        String name = br.readLine();
+        if (name == null) {return null;}
+        return name.replaceAll("\\s", "");
     }
-    
+
 }

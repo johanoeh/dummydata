@@ -1,55 +1,65 @@
 package com.sundsvall.midalva.gen;
 
-import com.sundsvall.midalva.model.Customer;
+import com.sundsvall.midalva.model.Person;
 import com.sundsvall.midalva.dao.DAO;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.IntStream;
 
 public class CustomerGenerator {
 
     public static final String FIRST_NAME_FILE = "";
 
-    private final NameGenerator nameGenerator;
-    private final AddressGenerator addressGenerator;
-    private final DAO dao = new DAO("females.txt","males.txt", "lastname.txt", "address.csv");
+    private  NameGenerator nameGenerator;
+    private  AddressGenerator addressGenerator;
+    
+    private final DAO dao;
 
-    public CustomerGenerator() throws IOException {
-
-        nameGenerator = new NameGenerator(dao.getMaleNames(), dao.getFemaleNames(), dao.getLastNames());
-        addressGenerator = new AddressGenerator(dao.getAdrresses());
+    public CustomerGenerator(DAO dao) {
+        this.dao = dao;     
+        try {
+            nameGenerator = new NameGenerator(dao.getMaleNames(), dao.getFemaleNames(), dao.getLastNames());
+            addressGenerator = new AddressGenerator(dao.getAdrresses());
+        } catch (IOException ex) {
+            Logger.getLogger(CustomerGenerator.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
-    public List<Customer> getCustomers(int n) {
+    public List<Person> getCustomers(int n) {
 
-        List<Customer> customers = new ArrayList<>();
+        List<Person> customers = new ArrayList<>();
         IntStream.range(0, n).forEach(i -> customers.add(createCustomer()));
         return customers;
     }
 
-    public Customer createCustomer() {
+    public Person createCustomer() {
 
-        Customer customer = Customer.create();
+        Person person = Person.create();
+        
+        person.setLastName(nameGenerator.getNextRandomLastName());
+        person.setAddress(addressGenerator.nextRandomAddress());
+        person.setPhone(DummyPhone.generateNumString());
+        
         if (!isFemale()) {
-            customer.setFirstName(nameGenerator.getNextRandomMaleName());
-            customer.setMiddleName(Optional.of(nameGenerator.getNextRandomMaleName()));
+            person.setFirstName(nameGenerator.getNextRandomMaleName());
+            person.setMiddleName(nameGenerator.getNextRandomMaleName());
         } else {
-            customer.setFirstName(nameGenerator.getNextRandomFemaleName());
-            customer.setMiddleName(Optional.of(nameGenerator.getNextRandomFemaleName()));
+            person.setFirstName(nameGenerator.getNextRandomFemaleName());
+            person.setMiddleName(nameGenerator.getNextRandomFemaleName());
         }
-        customer.setLastName(nameGenerator.getNextRandomLastName());
        
-        customer.setAddress(addressGenerator.nextRandomAddress());
-        customer.setPhone(Optional.of(DummyPhone.generateNumString(7, DummyPhone.NumBegin.BEGIN_4670)));
-
-        return customer;
+         person.setEmail(DummyEmail.create(person));
+      
+        return person;
     }
 
     public static boolean isFemale() {
         return ThreadLocalRandom.current().nextInt(2) == 0;
     }
+    
 }

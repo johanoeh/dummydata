@@ -1,7 +1,8 @@
 package com.sundsvall.midalva;
 
+import com.sundsvall.midalva.dao.DAO;
 import com.sundsvall.midalva.model.Address;
-import com.sundsvall.midalva.model.Customer;
+import com.sundsvall.midalva.model.Person;
 import com.sundsvall.midalva.gen.CustomerGenerator;
 import com.sundsvall.midalva.parser.AddressParser;
 import java.io.BufferedReader;
@@ -30,8 +31,8 @@ public class Application {
 
     public static void main(String[] args) throws IOException {
 
-        CustomerGenerator gen = new CustomerGenerator();
-        List<Customer> customers = gen.getCustomers(100);
+        CustomerGenerator gen = new CustomerGenerator(new DAO("females.txt", "males.txt", "lastnames.txt", "address.csv"));
+        List<Person> customers = gen.getCustomers(100);
 
         customers.forEach(s -> System.out.println(s.toString()));
   

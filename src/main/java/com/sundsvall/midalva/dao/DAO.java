@@ -19,23 +19,35 @@ import java.util.List;
  */
 public class DAO {
 
-    private String maleNameFile;
-    private String femaleNameFile;
-    private String lastNameFile;
-    private String addressFile;
+    private final String maleNameFile;
+    private final String femaleNameFile;
+    private final String lastNameFile;
+    private final String addressFile;
 
     private static BufferedReader getResource(String resource) throws UnsupportedEncodingException {
         System.out.println(resource);
         InputStream is = ClassLoader.getSystemResourceAsStream(resource);
-        BufferedReader br = new BufferedReader(new InputStreamReader(is,"UTF-8"));
+        BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
         return br;
     }
 
-    public DAO(String femaleNameFile,String maleNameFile, String lastNameFile, String addressFile) {
+    public DAO(String femaleNameFile, String maleNameFile, String lastNameFile, String addressFile) {
         this.maleNameFile = maleNameFile;
         this.femaleNameFile = femaleNameFile;
         this.lastNameFile = lastNameFile;
-        this.addressFile=addressFile;
+        this.addressFile = addressFile;
+    }
+
+    public List<String> getLastNames() throws IOException {
+        return getNames(lastNameFile);
+    }
+
+    public List<String> getMaleNames() throws IOException {
+        return getNames(maleNameFile);
+    }
+
+    public List<String> getFemaleNames() throws IOException {
+        return getNames(femaleNameFile);
     }
 
     private List<String> getNames(String names) throws IOException {
@@ -47,27 +59,14 @@ public class DAO {
         }
         return firstNames;
     }
-    
-    public List<String> getLastNames() throws IOException{
-        return getNames(lastNameFile);
-    }
-    
-    public List<String> getMaleNames() throws IOException{
-     return getNames(maleNameFile);
-    }
-    
-    public List<String> getFemaleNames() throws IOException{
-     return getNames(femaleNameFile);
-    }
-    
 
     public List<Address> getAdrresses() throws IOException {
 
         List<Address> addresses = new ArrayList<>();
-        InputStream is = ClassLoader.getSystemResourceAsStream("address.csv");
-        AddressParser parser = new AddressParser(new BufferedReader(new InputStreamReader(is,"UTF-8")));
+        InputStream is = ClassLoader.getSystemResourceAsStream(addressFile);
+        AddressParser parser = new AddressParser(new BufferedReader(new InputStreamReader(is, "UTF-8")));
         Address address = null;
-        while((address = parser.nextAdress()) != null){
+        while ((address = parser.nextAdress()) != null) {
             addresses.add(address);
         }
         return addresses;
