@@ -53,7 +53,11 @@ public class DummyLegalId {
                 multiplier = 2;
             }
         }
-        sum = values.stream().map((value) -> value / 10 + value % 10).reduce(sum, Integer::sum);
+        sum = values
+                .stream()
+                .map((value) -> value / 10 + value % 10)
+                .reduce(sum, Integer::sum);
+        
         return (10 - sum % 10)%10;
     }
 

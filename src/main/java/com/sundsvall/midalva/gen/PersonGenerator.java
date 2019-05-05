@@ -10,28 +10,29 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.IntStream;
+/**
+ * Generates a 
+ * @author johan
+ */
+public class PersonGenerator {
 
-public class CustomerGenerator {
-
-    public static final String FIRST_NAME_FILE = "";
 
     private  NameGenerator nameGenerator;
     private  AddressGenerator addressGenerator;
     
     private final DAO dao;
 
-    public CustomerGenerator(DAO dao) {
+    public PersonGenerator(DAO dao) {
         this.dao = dao;     
         try {
             nameGenerator = new NameGenerator(dao.getMaleNames(), dao.getFemaleNames(), dao.getLastNames());
             addressGenerator = new AddressGenerator(dao.getAdrresses());
         } catch (IOException ex) {
-            Logger.getLogger(CustomerGenerator.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PersonGenerator.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     public List<Person> getCustomers(int n) {
-
         List<Person> customers = new ArrayList<>();
         IntStream.range(0, n).forEach(i -> customers.add(createCustomer()));
         return customers;
