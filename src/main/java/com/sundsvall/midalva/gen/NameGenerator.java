@@ -9,9 +9,9 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class NameGenerator {
 
-    List<String> maleNames;
-    List<String> lastNames;
-    List<String> femaleNames;
+    private List<String> maleNames;
+    private List<String> lastNames;
+    private List<String> femaleNames;
 
     public NameGenerator( List<String> maleNames, List<String> femaleNames ,List<String> lastNames) {
         

@@ -20,6 +20,10 @@ public class DummyEmail {
         return fixName(customer.getFirstName())+"."+fixName(customer.getLastName())+"@"+domain; 
     }
 
+    public static String create(String firstName, String lastName){
+        return fixName(firstName)+"."+fixName(lastName)+"@"+getRandomDomain();
+    }
+
     public static String create(Person person) {
         return create(person, getRandomDomain());
     }
