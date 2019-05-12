@@ -1,5 +1,6 @@
 package com.sundsvall.midalva.gen;
 
+import com.sundsvall.midalva.utils.PersonalIdUtil;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
@@ -13,7 +14,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class DummyLegalId {
 
     private static final String DATE_FORMAT = "yyMMdd";
-    private static DateTimeFormatter dtf = DateTimeFormatter.ofPattern(DATE_FORMAT);
+    private static final DateTimeFormatter DTF = DateTimeFormatter.ofPattern(DATE_FORMAT);
 
     public static int getBirthYear() {
         return LocalDate.now().getYear() - ThreadLocalRandom.current().nextInt(18, 100);
@@ -39,44 +40,22 @@ public class DummyLegalId {
         return sb.toString();
     }
 
-    public static int checkSum(String birthStr) {
-
-        List<Integer> values = new ArrayList<>();
-        int multiplier = 2;
-        int sum = 0;
-
-        for (int i = 0; i < birthStr.length(); i++) {
-            values.add(multiplier * Character.getNumericValue(birthStr.charAt(i)));
-            if (multiplier == 2) {
-                multiplier = 1;
-            } else {
-                multiplier = 2;
-            }
-        }
-        sum = values
-                .stream()
-                .map((value) -> value / 10 + value % 10)
-                .reduce(sum, Integer::sum);
-        
-        return (10 - sum % 10)%10;
-    }
-
     public static String createDummyLegalId() {
         YearMonth yearMonth = YearMonth.of(getBirthYear(), getBirthMonth());
         int randomDayInMonth = ThreadLocalRandom.current().nextInt(1, yearMonth.lengthOfMonth() + 1);
         LocalDate localDate = LocalDate.of(yearMonth.getYear(), yearMonth.getMonth(), randomDayInMonth);
-        return localDate.format(dtf) + "-" + getLastDigits();
+        return localDate.format(DTF) + "-" + getLastDigits();
     }
     
-    public static String createFemaleLegalId(){
+    public static String createDummyFemaleLegalId(){
         String dummyLegalId = createDummyLegalId()+getRandomEvenNumber();
-        return dummyLegalId+checkSum(dummyLegalId.replace("-",""));
+        return dummyLegalId+PersonalIdUtil.checksumFirstNineDigits(dummyLegalId.replace("-",""));
     }
     
     
-    public static String createMaleLegalId(){
+    public static String createDummyMaleLegalId(){
         String dummyLegalId = createDummyLegalId()+getRandomOddNumber();
-        return dummyLegalId+checkSum(dummyLegalId.replace("-",""));
+        return dummyLegalId+PersonalIdUtil.checksumFirstNineDigits(dummyLegalId.replace("-",""));
     }
 
 }

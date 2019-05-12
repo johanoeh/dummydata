@@ -49,11 +49,11 @@ public class PersonGenerator {
         if (!isFemale()) {
             person.setFirstName(nameGenerator.getNextRandomMaleName());
             person.setMiddleName(nameGenerator.getNextRandomMaleName());
-            person.setLegalId(DummyLegalId.createFemaleLegalId());
+            person.setLegalId(DummyLegalId.createDummyFemaleLegalId());
         } else {
             person.setFirstName(nameGenerator.getNextRandomFemaleName());
             person.setMiddleName(nameGenerator.getNextRandomFemaleName());
-            person.setLegalId(DummyLegalId.createMaleLegalId());
+            person.setLegalId(DummyLegalId.createDummyMaleLegalId());
         }
        
          person.setEmail(DummyEmail.create(person));
