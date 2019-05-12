@@ -14,31 +14,35 @@ import java.util.stream.IntStream;
  * Generates a 
  * @author johan
  */
-public class PersonGenerator {
+public class DummyPersonalInfoGenerator {
 
 
     private  NameGenerator nameGenerator;
     private  AddressGenerator addressGenerator;
+    private final DummyPersonalIdGenerator personalIdGenerator;
     
     private final DAO dao;
 
-    public PersonGenerator(DAO dao) {
+    public DummyPersonalInfoGenerator(DAO dao) {
+
+        this.personalIdGenerator = new DummyPersonalIdGenerator();
         this.dao = dao;     
         try {
             nameGenerator = new NameGenerator(dao.getMaleNames(), dao.getFemaleNames(), dao.getLastNames());
             addressGenerator = new AddressGenerator(dao.getAdrresses());
         } catch (IOException ex) {
-            Logger.getLogger(PersonGenerator.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DummyPersonalInfoGenerator.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public List<Person> getCustomers(int n) {
+    public List<Person> createDummyPersonalInfos(int n) {
+
         List<Person> customers = new ArrayList<>();
-        IntStream.range(0, n).forEach(i -> customers.add(createCustomer()));
+        IntStream.range(0, n).forEach(i -> customers.add(createPersonalInfo()));
         return customers;
     }
 
-    public Person createCustomer() {
+    public Person createPersonalInfo() {
 
         Person person = Person.create();
         
@@ -49,11 +53,11 @@ public class PersonGenerator {
         if (!isFemale()) {
             person.setFirstName(nameGenerator.getNextRandomMaleName());
             person.setMiddleName(nameGenerator.getNextRandomMaleName());
-            person.setLegalId(DummyLegalId.createDummyFemaleLegalId());
+            person.setLegalId(personalIdGenerator.createFemaleLegalId10Digits());
         } else {
             person.setFirstName(nameGenerator.getNextRandomFemaleName());
             person.setMiddleName(nameGenerator.getNextRandomFemaleName());
-            person.setLegalId(DummyLegalId.createDummyMaleLegalId());
+            person.setLegalId(personalIdGenerator.createMaleLegalId10Digits());
         }
        
          person.setEmail(DummyEmail.create(person));
@@ -61,7 +65,7 @@ public class PersonGenerator {
         return person;
     }
 
-    public static boolean isFemale() {
+    private static boolean isFemale() {
         return ThreadLocalRandom.current().nextInt(2) == 0;
     }
     

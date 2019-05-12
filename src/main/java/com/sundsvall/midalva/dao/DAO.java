@@ -19,10 +19,10 @@ import java.util.List;
  */
 public class DAO {
 
-    private final String maleNameFile;
-    private final String femaleNameFile;
-    private final String lastNameFile;
-    private final String addressFile;
+    private  String maleNameFile;
+    private  String femaleNameFile;
+    private  String lastNameFile;
+    private  String addressFile;
 
     private static BufferedReader getResource(String resource) throws UnsupportedEncodingException {
         System.out.println(resource);
@@ -32,10 +32,40 @@ public class DAO {
     }
 
     public DAO(String femaleNameFile, String maleNameFile, String lastNameFile, String addressFile) {
+
         this.maleNameFile = maleNameFile;
         this.femaleNameFile = femaleNameFile;
         this.lastNameFile = lastNameFile;
         this.addressFile = addressFile;
+    }
+
+    private  DAO() {
+
+    }
+
+    public static DAO create(){
+        return new DAO();
+    }
+
+
+    public DAO withMaleNameFile(String maleNameFile) {
+        this.maleNameFile = maleNameFile;
+        return this;
+    }
+
+    public DAO withFemaleNameFile(String femaleNameFile) {
+        this.femaleNameFile = femaleNameFile;
+        return this;
+    }
+
+    public DAO withLastNameFile(String lastNameFile) {
+        this.lastNameFile = lastNameFile;
+        return this;
+    }
+
+    public DAO withAddressFile(String addressFile) {
+        this.addressFile = addressFile;
+        return this;
     }
 
     public List<String> getLastNames() throws IOException {

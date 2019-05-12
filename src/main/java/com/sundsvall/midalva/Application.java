@@ -2,9 +2,10 @@ package com.sundsvall.midalva;
 
 import com.sundsvall.midalva.dao.DAO;
 import com.sundsvall.midalva.model.Person;
-import com.sundsvall.midalva.gen.PersonGenerator;
+import com.sundsvall.midalva.gen.DummyPersonalInfoGenerator;
 import com.sundsvall.midalva.utils.PersonalIdUtil;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -16,9 +17,9 @@ public class Application {
 
     public static void main(String[] args) throws IOException {
 
-        PersonGenerator gen = new PersonGenerator(
+        DummyPersonalInfoGenerator gen = new DummyPersonalInfoGenerator(
                 new DAO("females.txt", "males.txt", "lastnames.txt", "address.csv"));
-        List<Person> persons = gen.getCustomers(1000);
+        List<Person> persons = gen.createDummyPersonalInfos(1000);
         List<Person> maximiliams = persons
                 .stream()
                 .filter(hasName("Maximiliam"))
