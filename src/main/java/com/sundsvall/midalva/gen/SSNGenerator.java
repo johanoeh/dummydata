@@ -4,8 +4,6 @@ import com.sundsvall.midalva.utils.PersonalIdUtil;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -13,7 +11,7 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class DummyLegalId {
 
-    private static final String DATE_FORMAT = "yyMMdd";
+    private static final String DATE_FORMAT = "yyyyMMdd";
     private static final DateTimeFormatter DTF = DateTimeFormatter.ofPattern(DATE_FORMAT);
 
     public static int getBirthYear() {
@@ -44,18 +42,18 @@ public class DummyLegalId {
         YearMonth yearMonth = YearMonth.of(getBirthYear(), getBirthMonth());
         int randomDayInMonth = ThreadLocalRandom.current().nextInt(1, yearMonth.lengthOfMonth() + 1);
         LocalDate localDate = LocalDate.of(yearMonth.getYear(), yearMonth.getMonth(), randomDayInMonth);
-        return localDate.format(DTF) + "-" + getLastDigits();
+        return localDate.format(DTF) + getLastDigits();
     }
     
     public static String createDummyFemaleLegalId(){
         String dummyLegalId = createDummyLegalId()+getRandomEvenNumber();
-        return dummyLegalId+PersonalIdUtil.checksumFirstNineDigits(dummyLegalId.replace("-",""));
+        return dummyLegalId+PersonalIdUtil.checksumFirstNineDigits(dummyLegalId);
     }
     
     
     public static String createDummyMaleLegalId(){
         String dummyLegalId = createDummyLegalId()+getRandomOddNumber();
-        return dummyLegalId+PersonalIdUtil.checksumFirstNineDigits(dummyLegalId.replace("-",""));
+        return dummyLegalId+PersonalIdUtil.checksumFirstNineDigits(dummyLegalId);
     }
 
 }

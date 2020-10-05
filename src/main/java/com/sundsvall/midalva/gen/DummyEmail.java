@@ -6,6 +6,9 @@
 package com.sundsvall.midalva.gen;
 
 import com.sundsvall.midalva.model.Person;
+
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -14,22 +17,22 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class DummyEmail {
     
-    private final static String [] DOMAINS = {"gmail.com","outlook.com","yahoo.com","aol.com","yandex.com","mail.com"};
+    public final static String [] DOMAINS = {"gmail.com","outlook.com","yahoo.com","aol.com","yandex.com","mail.com"};
     
-    public static String create(Person customer,String domain) { 
-        return fixName(customer.getFirstName())+"."+fixName(customer.getLastName())+"@"+domain; 
+    public static String create(Person person,String domain) {
+        return fixName(person.getFirstName())+"."+fixName(person.getLastName())+"@"+domain;
     }
 
     public static String create(String firstName, String lastName){
-        return fixName(firstName)+"."+fixName(lastName)+"@"+getRandomDomain();
+        return fixName(firstName)+"."+fixName(lastName)+"@"+getRandomDomain(Arrays.asList(DOMAINS));
     }
 
     public static String create(Person person) {
-        return create(person, getRandomDomain());
+        return create(person, getRandomDomain(Arrays.asList(DOMAINS)));
     }
     
-    public static String getRandomDomain(){
-        return DOMAINS[ThreadLocalRandom.current().nextInt(0, DOMAINS.length)];
+    public static String getRandomDomain(List<String> domains){
+        return domains.get(ThreadLocalRandom.current().nextInt(0, domains.size()));
     }
      
     private static String fixName(String name){

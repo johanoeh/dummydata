@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.sundsvall.midalva.utils;
 
 import java.time.LocalDate;
@@ -19,6 +15,11 @@ public class PersonalIdUtil {
     private static final String DATE_FORMAT = "yyMMdd";
     private static final DateTimeFormatter DTF = DateTimeFormatter.ofPattern(DATE_FORMAT);
     
+    /**
+     * Get age from personalId string
+     * @param personalId
+     * @return 
+     */
     public static long ageFromPersonalId(String personalId){
        String yearMonthDay=personalId.substring(0,6);
        LocalDate birthDate = LocalDate.from(DTF.parse(yearMonthDay));

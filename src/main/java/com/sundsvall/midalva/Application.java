@@ -20,6 +20,7 @@ public class Application {
         DummyPersonalInfoGenerator gen = new DummyPersonalInfoGenerator(
                 new DAO("females.txt", "males.txt", "lastnames.txt", "address.csv"));
         List<Person> persons = gen.createDummyPersonalInfos(1000);
+
         List<Person> maximiliams = persons
                 .stream()
                 .filter(hasName("Maximiliam"))
@@ -27,6 +28,8 @@ public class Application {
                 .filter(isOlderThen21())
                 .collect(Collectors.toList());
         maximiliams.forEach(customer -> System.out.println(customer));
+
+        System.out.println(persons);
 
     }
 
