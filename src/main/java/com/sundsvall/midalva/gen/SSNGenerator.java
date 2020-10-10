@@ -55,7 +55,7 @@ public class SSNGenerator {
      * Returns a random moth as an integer range 1-12
      * @return
      */
-    public static int getRandomBirthMonth() {
+     static int getRandomBirthMonth() {
         return ThreadLocalRandom.current().nextInt(1, 13);
     }
 
@@ -63,7 +63,7 @@ public class SSNGenerator {
      * Creates a random odd gender digit in range 1-9
      * @return
      */
-    public static int getRandomOddNumber() {
+     static int getRandomOddNumber() {
         return 2 * ThreadLocalRandom.current().nextInt(0, 4) + 1;
     }
 
@@ -71,7 +71,7 @@ public class SSNGenerator {
      * Creates a random even gender digit in range 1-9
      * @return
      */
-    public static int getRandomEvenNumber() {
+     static int getRandomEvenNumber() {
         return 2 * ThreadLocalRandom.current().nextInt(0, 4);
     }
 

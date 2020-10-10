@@ -30,9 +30,9 @@ public class SSNGeneratorFacade extends SSNGenerator {
 
     public String createRandomSSN() {
         if (ThreadLocalRandom.current().nextInt(2) == 0) {
-            return createSSN(Gender.FEMALE,minAge,maxAge).getSSN10Digits();
+            return createSSN(Gender.FEMALE,minAge,maxAge).getSSN12Digits();
         } else {
-            return createSSN(Gender.MALE,minAge,maxAge).getSSN10Digits();
+            return createSSN(Gender.MALE,minAge,maxAge).getSSN12Digits();
         }
     }
 
@@ -42,5 +42,13 @@ public class SSNGeneratorFacade extends SSNGenerator {
 
     public String createMaleLegalId10Digits() {
         return createSSN(Gender.MALE,minAge,maxAge).getSSN10Digits();
+    }
+
+    public String createFemaleLegalId12Digits() {
+       return createSSN(Gender.FEMALE,minAge,maxAge).getSSN12Digits();
+    }
+
+    public String createMaleLegalId12Digits() {
+       return createSSN(Gender.FEMALE,minAge,maxAge).getSSN12Digits();
     }
 }

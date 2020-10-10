@@ -6,11 +6,12 @@
 package com.sundsvall.midalva.parser;
 
 import java.io.IOException;
+import java.util.Optional;
 
 /**
  *
  * @author ohhhhjoh
  */
-public interface Parser {
-   public String nextName() throws IOException;    
+public interface Parser<T> {
+   T parseNext(String line) throws IOException;
 }

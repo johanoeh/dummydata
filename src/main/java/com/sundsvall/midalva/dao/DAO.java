@@ -14,8 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
- * @author ohhhhjoh
  */
 public class DAO {
 
@@ -81,25 +79,12 @@ public class DAO {
     }
 
     private List<String> getNames(String names) throws IOException {
-        String firstName = "";
-        List<String> firstNames = new ArrayList<>();
         NameParser nameParser = new NameParser(getResource(names));
-        while ((firstName = nameParser.nextName()) != null) {
-            firstNames.add(firstName);
-        }
-        return firstNames;
+        return nameParser.parseToObjects();
     }
 
-    public List<Address> getAdrresses() throws IOException {
-
-        List<Address> addresses = new ArrayList<>();
-        InputStream is = ClassLoader.getSystemResourceAsStream(addressFile);
-        AddressParser parser = new AddressParser(new BufferedReader(new InputStreamReader(is, "UTF-8")));
-        Address address = null;
-        while ((address = parser.nextAdress()) != null) {
-            addresses.add(address);
-        }
-        return addresses;
+    public List<Address> getAddressList() throws IOException {
+        AddressParser parser = new AddressParser(getResource(addressFile));
+        return parser.parseToObjects();
     }
-
 }

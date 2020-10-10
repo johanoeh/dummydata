@@ -6,17 +6,32 @@
 package com.sundsvall.midalva.parser;
 
 import java.io.BufferedReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author ohhhhjoh
  */
-public abstract class AbstractParser implements Parser{
+public abstract class AbstractParser<T> implements Parser<T>{
     
     protected BufferedReader br;
-
     public AbstractParser(BufferedReader br) {
         this.br = br;
     }
-    
+
+    public List<T> parseToObjects() throws IOException {
+
+        List<T> objects = new ArrayList<>();
+        String line;
+        while ((line = br.readLine()) !=null){
+            T object = parseNext(line);
+            if(object != null){
+                objects.add(object);
+            }
+        }
+        return objects;
+    }
+
 }

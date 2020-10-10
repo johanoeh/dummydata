@@ -7,22 +7,21 @@ package com.sundsvall.midalva.parser;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.Optional;
 
 /**
  *
  * @author johan
  */
-public class NameParser extends AbstractParser {
+public class NameParser extends AbstractParser<String> {
 
     public NameParser(BufferedReader br) {
         super(br);
     }
 
     @Override
-    public String nextName() throws IOException {
-        String name = br.readLine();
-        if (name == null) {return null;}
-        return name.replaceAll("\\s", "");
+    public String parseNext(String line) throws IOException {
+        if (line == null) {return null;}
+        return line.replaceAll("\\s", "");
     }
-
 }

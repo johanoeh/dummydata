@@ -9,29 +9,21 @@ import com.sundsvall.midalva.model.Address;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.Optional;
 
 /**
  *
- * @author ohhhhjoh
  */
-public class AddressParser {
-
-    private BufferedReader br;
+public class AddressParser extends AbstractParser<Address> {
 
     public AddressParser(BufferedReader br) {
-        this.br = br;
+        super(br);
     }
 
-    public Address nextAdress() throws IOException {
-        
-        String line = br.readLine();
-        
+    public Address parseNext(String line) throws IOException {
         if (line == null) { return null; }
-        
         String[] split = line.split(";");
-        
         if (!(split != null && split.length >= 4)) { return null; }
-        
         return new Address(split[3], split[4], split[0]);
     }
 }

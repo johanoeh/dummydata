@@ -21,15 +21,13 @@ public class PersonalInfoGenerator {
     private  AddressGenerator addressGenerator;
     private final SSNGeneratorFacade personalIdGenerator;
     
-    private final DAO dao;
+
 
     public PersonalInfoGenerator(DAO dao) {
-
         this.personalIdGenerator = new SSNGeneratorFacade();
-        this.dao = dao;     
         try {
             nameGenerator = new NameGenerator(dao.getMaleNames(), dao.getFemaleNames(), dao.getLastNames());
-            addressGenerator = new AddressGenerator(dao.getAdrresses());
+            addressGenerator = new AddressGenerator(dao.getAddressList());
         } catch (IOException ex) {
             Logger.getLogger(PersonalInfoGenerator.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -53,11 +51,11 @@ public class PersonalInfoGenerator {
         if (!isFemale()) {
             person.setFirstName(nameGenerator.getNextRandomMaleName());
             person.setMiddleName(nameGenerator.getNextRandomMaleName());
-            person.setLegalId(personalIdGenerator.createFemaleLegalId10Digits());
+            person.setLegalId(personalIdGenerator.createFemaleLegalId12Digits());
         } else {
             person.setFirstName(nameGenerator.getNextRandomFemaleName());
             person.setMiddleName(nameGenerator.getNextRandomFemaleName());
-            person.setLegalId(personalIdGenerator.createMaleLegalId10Digits());
+            person.setLegalId(personalIdGenerator.createMaleLegalId12Digits());
         }
        
          person.setEmail(DummyEmail.create(person));

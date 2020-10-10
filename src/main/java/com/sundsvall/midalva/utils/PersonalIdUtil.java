@@ -1,11 +1,16 @@
 
 package com.sundsvall.midalva.utils;
 
+import com.sundsvall.midalva.model.Person;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+
 /**
  *
  * @author johan
@@ -64,5 +69,31 @@ public class PersonalIdUtil {
 
         return (10 - sum % 10) % 10;
     }
+
+    public static Predicate<Person> hasName(String name) {
+        return person ->
+                person.getLastName().equalsIgnoreCase(name)
+                        || person.getFirstName().equalsIgnoreCase(name)
+                        || person.getMiddleName().equalsIgnoreCase(name);
+    }
+
+    public static Predicate<Person> isOlderThan21() {
+        return isOlderThan(21);
+    }
+
+    public static Predicate<Person> isFemale() {
+        return person -> PersonalIdUtil.isFemale(person.getLegalId());
+    }
+
+    public static Predicate<Person> isOlderThan(int age){
+        return person -> PersonalIdUtil.ageFromPersonalId(person.getLegalId()) > age;
+    }
+
+    public static List<Person> filterPersons(List<Person> persons, Predicate<Person> predicate){
+        return persons.stream()
+                .filter(predicate)
+                .collect(Collectors.toList());
+    }
+
     
 }
