@@ -28,7 +28,7 @@ public class PersonalInfoGenerator {
         try {
             nameGenerator = new NameGenerator(dao.getMaleNames(), dao.getFemaleNames(), dao.getLastNames());
             addressGenerator = new AddressGenerator(dao.getAddressList());
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(PersonalInfoGenerator.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

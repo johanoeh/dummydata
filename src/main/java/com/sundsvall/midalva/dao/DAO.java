@@ -10,17 +10,21 @@ import com.sundsvall.midalva.parser.AddressParser;
 import com.sundsvall.midalva.parser.NameParser;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
+ *
  */
 public class DAO {
 
-    private  String maleNameFile;
-    private  String femaleNameFile;
-    private  String lastNameFile;
-    private  String addressFile;
+    private String maleNameFile;
+    private String femaleNameFile;
+    private String lastNameFile;
+    private String addressFile;
 
     private static BufferedReader getResource(String resource) throws UnsupportedEncodingException {
         System.out.println(resource);
@@ -37,11 +41,11 @@ public class DAO {
         this.addressFile = addressFile;
     }
 
-    private  DAO() {
+    private DAO() {
 
     }
 
-    public static DAO create(){
+    public static DAO create() {
         return new DAO();
     }
 
@@ -66,25 +70,62 @@ public class DAO {
         return this;
     }
 
-    public List<String> getLastNames() throws IOException {
+    public List<String> getLastNames() throws Exception {
         return getNames(lastNameFile);
     }
 
-    public List<String> getMaleNames() throws IOException {
+    public List<String> getMaleNames() throws Exception {
         return getNames(maleNameFile);
     }
 
-    public List<String> getFemaleNames() throws IOException {
+    public List<String> getFemaleNames() throws Exception {
         return getNames(femaleNameFile);
     }
 
-    private List<String> getNames(String names) throws IOException {
-        NameParser nameParser = new NameParser(getResource(names));
-        return nameParser.parseToObjects();
+    private static final Logger LOG = Logger.getLogger(DAO.class.getName());
+
+    private static List<String> getNames(String names) throws Exception {
+       try (FileUtil fileUtil = new FileUtil(names)){
+           NameParser nameParser = new NameParser(fileUtil.getBufferedReader());
+           return nameParser.parseToObjects();
+       }catch (Exception e){
+           LOG.log(Level.SEVERE,"Caught exception while parsing file",e);
+           throw e;
+       }
     }
 
-    public List<Address> getAddressList() throws IOException {
-        AddressParser parser = new AddressParser(getResource(addressFile));
-        return parser.parseToObjects();
+    public List<Address> getAddressList() throws Exception {
+        try(FileUtil fileUtil = new FileUtil(addressFile)){
+            AddressParser parser = new AddressParser(fileUtil.getBufferedReader());
+            return parser.parseToObjects();
+        }catch (Exception e){
+            LOG.log(Level.SEVERE,"Caught exception while parsing file",e);
+            throw e;
+        }
+    }
+
+    public static class FileUtil implements AutoCloseable {
+
+        private InputStream is;
+        private BufferedReader br;
+        private String resource;
+
+        public FileUtil(String resource) {
+            this.resource = resource;
+        }
+
+        public BufferedReader getBufferedReader() {
+            is = ClassLoader.getSystemResourceAsStream(resource);
+            br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+            return br;
+        }
+
+        @Override
+        public void close() throws IOException {
+            if (br != null)
+                br.close();
+            if (is != null)
+                is.close();
+        }
     }
 }

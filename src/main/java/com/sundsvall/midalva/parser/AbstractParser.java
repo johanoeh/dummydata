@@ -5,6 +5,8 @@
  */
 package com.sundsvall.midalva.parser;
 
+import com.sundsvall.midalva.dao.DAO;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,7 +27,7 @@ public abstract class AbstractParser<T> implements Parser<T>{
 
         List<T> objects = new ArrayList<>();
         String line;
-        while ((line = br.readLine()) !=null){
+        while ((line = br.readLine()) != null){
             T object = parseNext(line);
             if(object != null){
                 objects.add(object);

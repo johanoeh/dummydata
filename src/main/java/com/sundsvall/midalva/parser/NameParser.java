@@ -5,6 +5,8 @@
  */
 package com.sundsvall.midalva.parser;
 
+import com.sundsvall.midalva.dao.DAO;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Optional;
@@ -15,12 +17,13 @@ import java.util.Optional;
  */
 public class NameParser extends AbstractParser<String> {
 
-    public NameParser(BufferedReader br) {
-        super(br);
+
+    public NameParser(BufferedReader bufferedReader) {
+        super(bufferedReader);
     }
 
     @Override
-    public String parseNext(String line) throws IOException {
+    public String parseNext(String line){
         if (line == null) {return null;}
         return line.replaceAll("\\s", "");
     }

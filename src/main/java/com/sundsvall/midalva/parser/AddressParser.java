@@ -5,6 +5,7 @@
  */
 package com.sundsvall.midalva.parser;
 
+import com.sundsvall.midalva.dao.DAO;
 import com.sundsvall.midalva.model.Address;
 
 import java.io.BufferedReader;
@@ -15,6 +16,7 @@ import java.util.Optional;
  *
  */
 public class AddressParser extends AbstractParser<Address> {
+
 
     public AddressParser(BufferedReader br) {
         super(br);
