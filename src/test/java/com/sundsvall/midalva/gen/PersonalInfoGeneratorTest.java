@@ -7,12 +7,12 @@ import org.junit.Test;
 
 import java.util.List;
 
-public class DummyPersonalInfoGeneratorTest {
+public class PersonalInfoGeneratorTest {
 
     @Test
     public void createDummyPersonalInfos() {
-        DummyPersonalInfoGenerator dummyPersonalInfoGenerator = new DummyPersonalInfoGenerator(new DAO("females.txt", "males.txt", "lastnames.txt", "address.csv") );
-        List<Person> dummyPersonalInfos = dummyPersonalInfoGenerator.createDummyPersonalInfos(100);
+        PersonalInfoGenerator personalInfoGenerator = new PersonalInfoGenerator(new DAO("females.txt", "males.txt", "lastnames.txt", "address.csv") );
+        List<Person> dummyPersonalInfos = personalInfoGenerator.createDummyPersonalInfos(100);
         Assert.assertEquals(dummyPersonalInfos.size(),100);
     }
 }

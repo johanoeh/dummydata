@@ -14,24 +14,24 @@ import java.util.stream.IntStream;
  * Generates a 
  * @author johan
  */
-public class DummyPersonalInfoGenerator {
+public class PersonalInfoGenerator {
 
 
     private  NameGenerator nameGenerator;
     private  AddressGenerator addressGenerator;
-    private final DummyPersonalIdGenerator personalIdGenerator;
+    private final SSNGeneratorFacade personalIdGenerator;
     
     private final DAO dao;
 
-    public DummyPersonalInfoGenerator(DAO dao) {
+    public PersonalInfoGenerator(DAO dao) {
 
-        this.personalIdGenerator = new DummyPersonalIdGenerator();
+        this.personalIdGenerator = new SSNGeneratorFacade();
         this.dao = dao;     
         try {
             nameGenerator = new NameGenerator(dao.getMaleNames(), dao.getFemaleNames(), dao.getLastNames());
             addressGenerator = new AddressGenerator(dao.getAdrresses());
         } catch (IOException ex) {
-            Logger.getLogger(DummyPersonalInfoGenerator.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PersonalInfoGenerator.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
